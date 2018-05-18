@@ -1,0 +1,23 @@
+{
+  "name": "w3lifer/yii2-doc-bookmarks",
+  "keywords": [
+    "doc",
+    "bookmarks"
+  ],
+  "license": "MIT",
+  "require": {
+    "yiisoft/yii2": "^2.0",
+    "w3lifer/netscape-bookmarks": "^1.0"
+  },
+  "authors": [
+    {
+      "name": "Roman Grinyov",
+      "email": "w3lifer@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "w3lifer\\yii2\\": ""
+    }
+  }
+}
