@@ -129,6 +129,7 @@ class DocBookmarks
                 );
             }
         }
+        $this->addSerialNumbersToSectionAndArticleNames();
     }
 
     private function processH1Anchor(
@@ -302,5 +303,28 @@ class DocBookmarks
         $anchor = trim($anchor);
         $anchor = str_replace([' '], '-', $anchor);
         return '#' . $anchor;
+    }
+
+    private function addSerialNumbersToSectionAndArticleNames()
+    {
+        $i = 0;
+        $bookmarks = [];
+        foreach ($this->bookmarks as $sectionName => $articles) {
+            if (is_array($articles)) {
+                $articlesWithSerialNumbers = [];
+                $j = 1;
+                foreach ($articles as $articleName => $anchors) {
+                    $articlesWithSerialNumbers[$j . '. ' . $articleName] =
+                        $anchors;
+                    $j++;
+                }
+                $bookmarks[$i . '. ' . $sectionName] =
+                    $articlesWithSerialNumbers;
+            } else {
+                $bookmarks[$i . '. ' . $sectionName] = $articles;
+            }
+            $i++;
+        }
+        $this->bookmarks = $bookmarks;
     }
 }
