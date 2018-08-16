@@ -262,6 +262,8 @@ class DocBookmarks
             }
         }
 
+        // Reset counter for header (length of hash string)
+
         if (strlen($hashString) < strlen(self::$lastSerialNumberHashString)) {
             self::$serialNumberStorage
                 [$sectionName]
