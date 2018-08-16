@@ -112,20 +112,21 @@ class DocBookmarks
         $this->bookmarks['Guide'] = self::BASE_LINK_YIIFRAMEWORK_COM;
         foreach ($tableOfContents as $sectionName => $articles) {
             $this->bookmarks[$sectionName] = [];
-            foreach ($articles as $articleName => $filename) {
-                if (preg_match('=^https?\://=', $filename)) {
-                    $this->bookmarks[$sectionName][$articleName] = $filename;
+            foreach ($articles as $articleName => $articleFilename) {
+                if (preg_match('=^https?\://=', $articleFilename)) {
+                    $this->bookmarks[$sectionName][$articleName] =
+                        $articleFilename;
                     continue;
                 }
-                $fileContent =
+                $articleContent =
                     file_get_contents(
-                        self::BASE_LINK_GITHUB_COM . '/' . $filename
+                        self::BASE_LINK_GITHUB_COM . '/' . $articleFilename
                     );
                 $this->processAnchors(
                     $sectionName,
                     $articleName,
-                    $filename,
-                    $fileContent
+                    $articleFilename,
+                    $articleContent
                 );
             }
         }
@@ -155,19 +156,19 @@ class DocBookmarks
     private function processAnchors(
         $sectionName,
         $articleName,
-        $filename,
-        $fileContent
+        $articleFilename,
+        $articleContent
     ) {
-        $filename = preg_replace('=\.md$=', '', $filename);
+        $articleFilename = preg_replace('=\.md$=', '', $articleFilename);
         $this->processH1Anchor(
             $sectionName,
             $articleName,
-            $filename,
-            $fileContent
+            $articleFilename,
+            $articleContent
         );
         preg_match_all(
             '=(?:\n(.+?)\n\-{4,}|\n(#{2,6} .+?)\n)=',
-            $fileContent,
+            $articleContent,
             $headers
         );
         foreach ($headers[1] as $index => $header) {
@@ -178,7 +179,7 @@ class DocBookmarks
             $header = self::purifyHeader($header);
             $header = trim($header);
             $headerWithSerialNumber =
-                self::getAnchorWithSerialNumber(
+                self::getHeaderWithSerialNumber(
                     $sectionName,
                     $articleName,
                     $header
@@ -188,7 +189,7 @@ class DocBookmarks
                     [$articleName]
                         [$headerWithSerialNumber] =
                             self::BASE_LINK_YIIFRAMEWORK_COM . '/' .
-                                $filename .
+                                $articleFilename .
                                     self::getAnchor($header);
         }
     }
@@ -229,7 +230,7 @@ class DocBookmarks
      * @param string $anchor
      * @return string
      */
-    private static function getAnchorWithSerialNumber(
+    private static function getHeaderWithSerialNumber(
         $sectionName,
         $articleName,
         $anchor
