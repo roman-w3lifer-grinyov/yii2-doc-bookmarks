@@ -1,7 +1,12 @@
 # yii2-doc-bookmarks
 
+- [Download](#download)
 - [Installation](#installation)
 - [Usage](#usage)
+
+## Download
+
+Your can download the latest bookmarks on the following site: https://data.grinvik.com.
 
 ## Installation
 
