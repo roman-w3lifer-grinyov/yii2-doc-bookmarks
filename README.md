@@ -25,9 +25,7 @@ composer require w3lifer/yii2-doc-bookmarks
 
 use w3lifer\yii2\DocBookmarks;
 
-$docBookmarks = new DocBookmarks([
-    'version' => '5.7', // "master" by default
-]);
+$docBookmarks = new DocBookmarks();
 
 file_put_contents(
     __DIR__ . '/yii2-doc-bookmarks-as-array.php',
