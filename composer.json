@@ -19,5 +19,8 @@
     "psr-4": {
       "w3lifer\\yii2\\": ""
     }
-  }
+  },
+  "bin": [
+    "yii2-doc-bookmarks"
+  ]
 }

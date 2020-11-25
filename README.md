@@ -4,6 +4,8 @@
 - [Installation](#installation)
 - [Usage](#usage)
 
+![Example](screenshot.png)
+
 ## Download
 
 Your can download the latest bookmarks on the following site: https://data.grinvik.com.
@@ -16,39 +18,37 @@ composer require w3lifer/yii2-doc-bookmarks
 
 ## Usage
 
+- Create `yii2-doc-bookmarks.php` file with the following content:
+
 ``` php
 <?php
 
-namespace app\commands;
-
 use w3lifer\yii2\DocBookmarks;
-use Yii;
-use yii\console\Controller;
 
-class DocBookmarksController extends Controller
-{
-    /**
-     * ``` sh
-     * php yii doc-bookmarks
-     * ```
-     */
-    public function actionIndex()
-    {
-        $docBookmarks = new DocBookmarks();
+$docBookmarks = new DocBookmarks([
+    'version' => '5.7', // "master" by default
+]);
 
-        file_put_contents(
-            Yii::getAlias('@runtime') . '/doc-bookmarks-as-array.php',
-            '<?php' . "\n\n" .
-                var_export($docBookmarks->getAsArray(), true) . ';'
-        );
+file_put_contents(
+    __DIR__ . '/yii2-doc-bookmarks-as-array.php',
+    '<?php' . "\n\n" .
+        var_export($docBookmarks->getAsArray(), true) . ';'
+);
 
-        file_put_contents(
-            Yii::getAlias('@runtime') .
-                '/doc-bookmarks-as-netscape-bookmarks.html',
-            $docBookmarks->getAsNetscapeBookmarks()
-        );
+file_put_contents(
+    __DIR__ . '/yii2-doc-bookmarks-as-netscape-bookmarks.html',
+    $docBookmarks->getAsNetscapeBookmarks()
+);
 
-        echo 'Done!' . "\n";
-    }
-}
+echo 'Done!' . "\n";
 ```
+
+- Run it from the command line to get two files with bookmarks:
+
+``` sh
+php yii2-doc-bookmarks.php
+```
+
+---
+
+- Run `vendor/bin/yii2-doc-bookmarks` to get `yii2-doc-bookmarks-as-array.php` and `yii2-doc-bookmarks-as-netscape-bookmarks.html` in the parent directory of the `vendor` directory.
